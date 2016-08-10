@@ -1,6 +1,6 @@
 Metadata-Version: 1.1
 Name: collective.behavior.sql
-Version: 0.7
+Version: 0.8
 Summary: collective.behavior.sql
 Home-page: http://www.martronic.ch
 Author: Martronic SA
@@ -13,6 +13,9 @@ Description: collective.behavior.sql Package Readme
         --------
         
         collective.behavior.sql is a module intended to synchronize one or many sql databases with plone content using dexterity as content and sql t able descriptor.
+        
+        v 0.8 Allow SQL DX item to be added in site (ZODB) and get par of its content from SQL.
+              Fix sqlalchemy session handling, several bug fixes
         
         v 0.7 Allow the use of relational table to get simple data as tuple (like keywords)
         
