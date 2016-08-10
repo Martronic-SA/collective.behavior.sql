@@ -1,5 +1,0 @@
-include *.txt
-include *.rst
-recursive-include collective *
-global-exclude *pyc
-global-exclude *pyo
