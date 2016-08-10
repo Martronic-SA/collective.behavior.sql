@@ -1,0 +1,127 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:zcml="http://namespaces.zope.org/zcml">
+
+  <browser:page
+      name="edit"
+      for="collective.behavior.sql.interfaces.ISQLTypeSchemaContext"
+      class=".listing.SQLSchemaListingPage"
+      permission="plone.schemaeditor.ManageSchemata"
+      layer="collective.behavior.sql.interfaces.ICollectiveBehaviorSQLLayer" />
+
+  <adapter
+      factory=".types.SQLTypeSettingsAdapter"
+      provides="..interfaces.ISQLTypeSettings"
+      for="plone.dexterity.interfaces.IDexterityFTI"
+      />
+
+  <browser:page
+      name="dexterity-types"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      class=".types.SQLTypesContext"
+      permission="plone.schemaeditor.ManageSchemata"
+      allowed_interface="OFS.interfaces.IItem"
+      layer="collective.behavior.sql.interfaces.ICollectiveBehaviorSQLLayer" />
+
+  <adapter factory=".overview.ReindexActionHandler" />
+  
+  <browser:page
+      name="overview"
+      for="collective.behavior.sql.interfaces.ISQLTypeSchemaContext"
+      class=".overview.SQLTypeOverviewPage"
+      permission="plone.schemaeditor.ManageSchemata"
+      layer="collective.behavior.sql.interfaces.ICollectiveBehaviorSQLLayer" />
+
+  <browser:page
+      name="fields"
+      for="collective.behavior.sql.interfaces.ISQLTypeSchemaContext"
+      class=".fields.SQLTypeFieldsPage"
+      permission="plone.schemaeditor.ManageSchemata"
+      layer="collective.behavior.sql.interfaces.ICollectiveBehaviorSQLLayer" />
+
+  <browser:page
+      name="behaviors"
+      for="collective.behavior.sql.interfaces.ISQLTypeSchemaContext"
+      class=".behaviors.SQLTypeBehaviorsPage"
+      permission="plone.schemaeditor.ManageSchemata"
+      layer="collective.behavior.sql.interfaces.ICollectiveBehaviorSQLLayer" />
+
+  <browser:page
+      name="data"
+      for="collective.behavior.sql.interfaces.ISQLTypeSchemaContext"
+      class=".data.SQLTypeDataListingPage"
+      permission="plone.schemaeditor.ManageSchemata"
+      layer="collective.behavior.sql.interfaces.ICollectiveBehaviorSQLLayer" />
+
+  <browser:page
+      name="data"
+      for="collective.behavior.sql.interfaces.ISQLItemPublisher"
+      class=".data.SQLItemPublisherListingPage"
+      permission="plone.schemaeditor.ManageSchemata"
+      layer="collective.behavior.sql.interfaces.ICollectiveBehaviorSQLLayer" />
+      
+  <browser:page
+      name="edit"
+      for="collective.behavior.sql.interfaces.ISQLFieldContext"
+      class=".edit.SQLEditView"
+      permission="plone.schemaeditor.ManageSchemata"
+      layer="collective.behavior.sql.interfaces.ICollectiveBehaviorSQLLayer" />
+
+  <!-- SQL add view and form - invoked from ++add++ traverser -->
+  <adapter
+      for="Products.CMFCore.interfaces.IFolderish
+           collective.behavior.sql.interfaces.ICollectiveBehaviorSQLLayer
+           collective.behavior.sql.interfaces.ISQLDexterityFTI"
+      provides="zope.publisher.interfaces.browser.IBrowserPage"
+      factory=".add.SQLAddView"
+      />
+    <class class=".add.SQLAddView">
+        <require
+            permission="cmf.AddPortalContent"
+            interface="zope.publisher.interfaces.browser.IBrowserPage"
+            />
+    </class>
+
+  <adapter
+      factory=".types.SQLTypeStatsAdapter"
+      provides="plone.app.dexterity.interfaces.ITypeStats"
+      for="collective.behavior.sql.interfaces.ISQLDexterityFTI"
+      />
+
+  <browser:page
+      name="catalogupdatesql"
+      for="*"
+      class=".behaviors.CatalogUpdateSQL"
+      permission="plone.schemaeditor.ManageSchemata"
+      layer="collective.behavior.sql.interfaces.ICollectiveBehaviorSQLLayer" />
+
+  <!-- Tuple for Subjects -->
+  <utility
+      name="zope.schema._field.Tuple"
+      component=".fields.TupleFactory"
+      />
+
+  <class class="zope.schema.Tuple">
+    <implements interface=".fields.ITuple" />
+  </class>
+
+  <adapter
+      factory=".fields.SQLCollectionTermsVocabulary"
+      />
+
+  <browser:page
+    name="add-field"
+    for="collective.behavior.sql.interfaces.ISQLTypeSchemaContext"
+    class=".add_field.SQLFieldAddFormPage"
+    permission="plone.schemaeditor.ManageSchemata"
+    />
+    
+  <!-- SQL ITEM edit view -->
+  <browser:page
+      for="collective.behavior.sql.interfaces.ISQLDexterityItem"
+      name="edit"
+      class=".edit.SQLDexterityItemEditView"
+      permission="cmf.ModifyPortalContent"
+      />
+</configure>

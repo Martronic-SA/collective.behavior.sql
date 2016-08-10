@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<import-steps>
+ <import-step id="collectivebehaviorsql"
+              version="20160412-01"
+              handler="collective.behavior.sql.setuphandlers.setupCBSQL"
+              title="collective.behavior.sql configuration">
+ </import-step>
+</import-steps>

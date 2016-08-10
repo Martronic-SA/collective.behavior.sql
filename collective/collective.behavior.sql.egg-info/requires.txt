@@ -1,0 +1,7 @@
+setuptools
+psycopg2
+plone.app.dexterity
+collective.saconnect
+collective.dexteritytextindexer
+z3c.saconfig
+collective.monkeypatcher

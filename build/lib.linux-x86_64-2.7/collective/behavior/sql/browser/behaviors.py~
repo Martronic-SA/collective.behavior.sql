@@ -1,0 +1,18 @@
+from plone.app.dexterity.browser.behaviors import TypeBehaviorsPage, TypeBehaviorsForm, BehaviorConfigurationAdapter
+from collective.behavior.sql import _
+
+class SQLBehaviorConfigurationAdapter(BehaviorConfigurationAdapter):
+    """"""
+
+class SQLTypeBehaviorsForm(TypeBehaviorsForm):
+
+    def getContent(self):
+        return SQLBehaviorConfigurationAdapter(self.context)
+        
+class SQLTypeBehaviorsPage(TypeBehaviorsPage):
+    
+    @property
+    def tabs(self):
+        tabs = super(SQLTypeBehaviorsPage, self).tabs
+        tabs += ((_('Data'), '@@data'),)
+        return tabs

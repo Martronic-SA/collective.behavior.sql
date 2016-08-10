@@ -1,0 +1,40 @@
+<configure
+  xmlns="http://namespaces.zope.org/zope"
+  xmlns:zcml="http://namespaces.zope.org/zcml">
+
+  <utility
+    component=".vocabularies.SQLAlchemyConnectionStringsVocabularyFactory"
+    name="collective.behavior.sql.AvailableSQLAlchemyConnections"
+    />
+
+  <utility
+    component=".vocabularies.SQLAlchemyTablesStringsVocabularyFactory"
+    name="collective.behavior.sql.AvailableSQLAlchemyTables"
+    />
+
+  <utility
+    component=".vocabularies.SQLAlchemyColumnsStringsVocabularyFactory"
+    name="collective.behavior.sql.AvailableSQLAlchemyColumns"
+    />
+
+  <utility
+    component=".vocabularies.SQLAlchemyColumnsTimestampVocabularyFactory"
+    name="collective.behavior.sql.AvailableSQLAlchemyTimestampColumns"
+    />
+
+  <utility
+    component=".vocabularies.SQLAlchemyColumnsUniqueStringsVocabularyFactory"
+    name="collective.behavior.sql.AvailableSQLAlchemyColumnsUnique"
+    />
+
+  <utility
+    component=".vocabularies.SQLAvailableSQLAlchemyItemIDsVocabularyFactory"
+    name="collective.behavior.sql.AvailableSQLAlchemyItemIDs"
+    />
+
+  <utility
+    component=".vocabularies.DexterityFTIVocabularyFactory"
+    name="collective.behavior.sql.AvailableDexterityFTIs"
+    />
+
+</configure>

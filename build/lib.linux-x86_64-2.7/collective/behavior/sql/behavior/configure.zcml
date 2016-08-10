@@ -1,0 +1,32 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
+    i18n_domain="collective.behavior.sql">
+
+  <include package="plone.behavior" file="meta.zcml" />
+
+  <!-- Behavior For Dexterity -->
+  <plone:behavior
+    title="SQL Content"
+    description="This content reflects a table in a SQL database"
+    provides=".behaviors.ISQLContent"
+    factory=".behaviors.SQLContent"
+    />
+
+  <!-- Configure plone.supermodel handler -->
+  <utility
+      factory=".supermodel.SQLColumnFieldMetadataHandler"
+      name="collective.behavior.sql.SQLColumnFieldMetadataHandler"/>
+      
+  <adapter
+      provides=".schemaeditor.IFieldSQLBehavior"
+      for="zope.schema.interfaces.IField"
+      factory=".schemaeditor.FieldSQLBehaviorAdapter"/>
+
+ 
+</configure>

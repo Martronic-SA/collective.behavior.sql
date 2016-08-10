@@ -1,0 +1,22 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    i18n_domain="collective.behavior.sql">
+    
+  <genericsetup:registerProfile
+    name="default"
+    title="SQL behavior"
+    directory="profiles/default"
+    description='Adds SQL behavior to be used with dexterity content types.'
+    provides="Products.GenericSetup.interfaces.EXTENSION"
+    />
+
+  <genericsetup:registerProfile
+    name="uninstall"
+    title="Uninstall SQL behavior"
+    directory="profiles/uninstall"
+    description="Uninstall SQL behavior Package."
+    provides="Products.GenericSetup.interfaces.EXTENSION"
+    />
+
+</configure>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<object name="portal_catalog" meta_type="Plone Catalog Tool">
+
+ <index name="sql_id" meta_type="FieldIndex">
+  <indexed_attr value="sql_id"/>
+ </index>
+
+ <index name="sql_table" meta_type="FieldIndex">
+  <indexed_attr value="sql_table"/>
+ </index>
+
+ <index name="sql_virtual" meta_type="FieldIndex">
+  <indexed_attr value="sql_virtual"/>
+ </index>
+ 
+ <column value="sql_id"/>
+ <column value="sql_table"/>
+
+</object>

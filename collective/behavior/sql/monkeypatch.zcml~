@@ -1,0 +1,32 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
+    xmlns:monkey="http://namespaces.plone.org/monkey"
+    i18n_domain="collective.behavior.sql">
+
+    <!-- This shoud be avoided but there is no other way to make the catalog getting the SQL object -->
+    <include package="collective.monkeypatcher" />
+
+    <monkey:patch
+        description="Make getObjet get the SQL object"
+        class="Products.ZCatalog.CatalogBrains.AbstractCatalogBrain"
+        original="getObject"
+        replacement=".monkeypatch.getObject"
+        />
+
+    <monkey:patch
+        description="Make getObjet get the SQL object"
+        class="Products.ZCatalog.CatalogBrains.AbstractCatalogBrain"
+        original="_unrestrictedGetObject"
+        replacement=".monkeypatch._unrestrictedGetObject"
+        />
+
+    <monkey:patch
+        description="Make traversal get the SQL object"
+        class="Products.ZCatalog.ZCatalog.ZCatalog"
+        original="resolve_path"
+        replacement=".monkeypatch.resolve_path"
+        />
+
+</configure>

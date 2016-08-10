@@ -1,0 +1,46 @@
+from plone.dexterity.interfaces import IDexterityContent
+from collective.gtags import MessageFactory as _
+from plone.autoform import directives
+from plone.autoform.interfaces import IFormFieldProvider
+from plone.supermodel import model
+from zope.component import adapter
+from zope.interface import implementer
+from zope.interface import provider
+
+
+@provider(IFormFieldProvider)
+class ISQLContent(model.Schema):
+    """Add tags to content
+    """
+
+    sql_connections = schema.Choice(
+        title=_(u"label_connections", default=u"Connections"),
+        value_type=schema.Choice(vocabulary="collective.behavior.sql.AvailableSQLAlchemyConnections")
+        )
+
+    sql_table = schema.Choice(
+        title=_(u"label_table", default=u"Table"),
+        required=False,
+        values=[]
+        )
+
+
+@implementer(ISQLContent)
+@adapter(IDexterityContent)
+class SQLContent(object):
+    """Store tags in the Dublin Core metadata Subject field. This makes
+    tags easy to search for.
+    """
+
+    def __init__(self, context):
+        self.context = context
+
+    @property
+    def tags(self):
+        return set(self.context.Subject())
+
+    @tags.setter
+    def tags(self, value):
+        if value is None:
+            value = ()
+        self.context.setSubject(tuple(value))

@@ -1,0 +1,142 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2016-06-03 09:21+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: DOMAIN\n"
+
+#: ../profiles.zcml:12
+msgid "Adds SQL behavior to be used with dexterity content types."
+msgstr "Ajoute un comportement SQL à utiliser avec les contenus dexterity."
+
+#: ../browser/overview.py:104
+msgid "Catalog Reindex"
+msgstr "Cataloguer"
+
+#: ../browser/overview.py:105
+msgid "Catalog Unindex"
+msgstr "Retirer du catalogue"
+
+#: ../browser/overview.py:103
+msgid "Catalog Update"
+msgstr "Mettre à jour le catalogue"
+
+#: ../browser/behaviors.py:15
+#: ../browser/data.py:206
+#: ../browser/fields.py:34
+msgid "Data"
+msgstr "Données"
+
+#: ../behavior/configure.zcml:19
+msgid "SQL Content"
+msgstr "Contenu SQL"
+
+#: ../profiles.zcml:12
+msgid "SQL behavior"
+msgstr "Comportement SQL"
+
+#: ../behavior/configure.zcml:19
+msgid "This content reflects a table in a SQL database"
+msgstr "Ce contenu reflète un table dans une base de données SQL"
+
+#: ../profiles.zcml:20
+msgid "Uninstall SQL behavior"
+msgstr "Désinstaller le comprtement SQL"
+
+#: ../profiles.zcml:20
+msgid "Uninstall SQL behavior Package."
+msgstr "Désinstaller le module Comportement SQL"
+
+#. Default: "Corresponding column in database source table."
+#: ../behavior/schemaeditor.py:25
+msgid "help_column"
+msgstr "Choisissez la colonne dans la table source de la base de données."
+
+#. Default: "The PrimaryKey column that will give the id to the item."
+#: ../interfaces.py:34
+msgid "help_id_column"
+msgstr "Choisissez la colonne PrimaryKey source pour l'idenfiant du contenu."
+
+#. Default: "Use a custom WHERE clause to filter the sql table. You must specify only the WHERE clause and not the whole query clause. Example:type = 'public'"
+#: ../interfaces.py:41
+msgid "help_sql_WHERE"
+msgstr "Utilisez un filtre SQL personnalisé. Vous ne devez que spécifier la clause \"WHERE\" et non la clause entière. Exemple: type = 'public'"
+
+#. Default: "Choose a folder where the sql items will be located. If empty, a virtual folder named 'data-'+ type.id will be registered."
+#: ../interfaces.py:60
+msgid "help_sql_folder_id"
+msgstr "Choisissez le dossier où les contenus sql seront localisés. Si vide, une vue appelée 'data-'+ type.id sera automatiquement mise en place."
+
+#. Default: "The ID of the SQL content item"
+#: ../behavior/behaviors.py:21
+msgid "help_sql_id_column"
+msgstr "L'identifiant du contenu SQL"
+
+#. Default: "Modification date of the last modified item in the selected table."
+#: ../interfaces.py:54
+msgid "help_sql_modification_last_timestamp"
+msgstr "Date de modification de la dernière modification dans la table sélectionnée."
+
+#. Default: "The last modificaion date time column that will be taken into account to know which items have to be updated in the catalog."
+#: ../interfaces.py:47
+msgid "help_sql_modification_timestamp_column"
+msgstr "La dernière date de modification prise en compte pour la recherche des éléments devant être mis à jour dans le catalogue."
+
+#. Default: "Column"
+#: ../behavior/schemaeditor.py:24
+msgid "label_column"
+msgstr "Colonne"
+
+#. Default: "Connection"
+#: ../interfaces.py:22
+msgid "label_connection"
+msgstr "Connexion"
+
+#. Default: "ID Column"
+#: ../interfaces.py:33
+msgid "label_id_column"
+msgstr "Colonne Identifiant"
+
+#. Default: "WHERE"
+#: ../interfaces.py:40
+msgid "label_sql_WHERE"
+msgstr "WHERE"
+
+#. Default: "Folder for SQL items"
+#: ../interfaces.py:59
+msgid "label_sql_folder_id"
+msgstr "Dossier pour les contenus SQL"
+
+#. Default: "SQL Item ID"
+#: ../behavior/behaviors.py:20
+msgid "label_sql_id"
+msgstr "ID du contenu SQL"
+
+#. Default: "Last modification date time"
+#: ../interfaces.py:53
+msgid "label_sql_modification_last_timestamp"
+msgstr "Dernière date et heure de modification"
+
+#. Default: "Modification date time column"
+#: ../interfaces.py:46
+msgid "label_sql_modification_timestamp_column"
+msgstr "Colonne pour la dernière date et heure de modification"
+
+#. Default: "SQL Virtual"
+#: ../behavior/behaviors.py:28
+msgid "label_sql_virtual"
+msgstr "SQL Virtuel"
+
+#. Default: "Table"
+#: ../interfaces.py:27
+msgid "label_table"
+msgstr "Table"

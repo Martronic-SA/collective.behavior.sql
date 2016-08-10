@@ -1,0 +1,39 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone.app.widgets"
+      lang="en"
+      >
+<body>
+
+    <metal:main fill-slot="main">
+        <tal:main-macro metal:define-macro="main">
+
+          <h1 class="documentFirstHeading">SQL Test</h1>
+
+          <div id="skel-contents">
+            <metal:block use-macro="context/@@ploneform-macros/titlelessform" />
+            <table tal:condition="view/items">
+              <thead>
+                  <tr>
+                    <th tal:repeat="column view/columns">
+                      <span tal:content="column"/>
+                    </th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr tal:repeat="item view/items">
+                    <td tal:repeat="column view/columns">
+                      <span tal:content="python:getattr(item, column, None)"/>
+                    </td>
+                  </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </tal:main-macro>
+    </metal:main>
+</body>
+</html>

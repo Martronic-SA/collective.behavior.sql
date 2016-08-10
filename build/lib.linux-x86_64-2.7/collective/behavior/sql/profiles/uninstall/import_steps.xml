@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<import-steps>
+ <import-step id="collectivebehaviorsql"
+              version="20160412-01"
+              handler="collective.behavior.sql.setuphandlers.uninstallCBSQL"
+              title="collective.behavior.sql uninstall">
+ </import-step>
+</import-steps>

@@ -1,0 +1,22 @@
+Metadata-Version: 1.1
+Name: collective.behavior.sql
+Version: 0.1
+Summary: collective.behavior.sql
+Home-page: http://www.martronic.ch
+Author: Martronic SA
+Author-email: martronic@martronic.ch
+License: GPL
+Description: collective.behavior.sql Package Readme
+        ===================================
+        
+        Overview
+        --------
+        
+        collective.behavior.sql is a module intended to synchronize one or many sql databases with plone content using dexterity as content and sql t able descriptor.
+        
+        
+Keywords: dexterity,behavior,sql
+Platform: UNKNOWN
+Classifier: Framework :: Plone
+Classifier: Programming Language :: Python
+Classifier: Topic :: Software Development :: Libraries :: Python Modules

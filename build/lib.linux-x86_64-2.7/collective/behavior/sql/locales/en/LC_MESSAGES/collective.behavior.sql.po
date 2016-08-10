@@ -1,0 +1,142 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2016-06-03 09:21+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: DOMAIN\n"
+
+#: ../profiles.zcml:12
+msgid "Adds SQL behavior to be used with dexterity content types."
+msgstr ""
+
+#: ../browser/overview.py:104
+msgid "Catalog Reindex"
+msgstr ""
+
+#: ../browser/overview.py:105
+msgid "Catalog Unindex"
+msgstr ""
+
+#: ../browser/overview.py:103
+msgid "Catalog Update"
+msgstr ""
+
+#: ../browser/behaviors.py:15
+#: ../browser/data.py:206
+#: ../browser/fields.py:34
+msgid "Data"
+msgstr ""
+
+#: ../behavior/configure.zcml:19
+msgid "SQL Content"
+msgstr ""
+
+#: ../profiles.zcml:12
+msgid "SQL behavior"
+msgstr ""
+
+#: ../behavior/configure.zcml:19
+msgid "This content reflects a table in a SQL database"
+msgstr ""
+
+#: ../profiles.zcml:20
+msgid "Uninstall SQL behavior"
+msgstr ""
+
+#: ../profiles.zcml:20
+msgid "Uninstall SQL behavior Package."
+msgstr ""
+
+#. Default: "Corresponding column in database source table."
+#: ../behavior/schemaeditor.py:25
+msgid "help_column"
+msgstr ""
+
+#. Default: "The PrimaryKey column that will give the id to the item."
+#: ../interfaces.py:34
+msgid "help_id_column"
+msgstr ""
+
+#. Default: "Use a custom WHERE clause to filter the sql table. You must specify only the WHERE clause and not the whole query clause. Example:type = 'public'"
+#: ../interfaces.py:41
+msgid "help_sql_WHERE"
+msgstr ""
+
+#. Default: "Choose a folder where the sql items will be located. If empty, a virtual folder named 'data-'+ type.id will be registered."
+#: ../interfaces.py:60
+msgid "help_sql_folder_id"
+msgstr ""
+
+#. Default: "The ID of the SQL content item"
+#: ../behavior/behaviors.py:21
+msgid "help_sql_id_column"
+msgstr ""
+
+#. Default: "Modification date of the last modified item in the selected table."
+#: ../interfaces.py:54
+msgid "help_sql_modification_last_timestamp"
+msgstr ""
+
+#. Default: "The last modificaion date time column that will be taken into account to know which items have to be updated in the catalog."
+#: ../interfaces.py:47
+msgid "help_sql_modification_timestamp_column"
+msgstr ""
+
+#. Default: "Column"
+#: ../behavior/schemaeditor.py:24
+msgid "label_column"
+msgstr ""
+
+#. Default: "Connection"
+#: ../interfaces.py:22
+msgid "label_connection"
+msgstr ""
+
+#. Default: "ID Column"
+#: ../interfaces.py:33
+msgid "label_id_column"
+msgstr ""
+
+#. Default: "WHERE"
+#: ../interfaces.py:40
+msgid "label_sql_WHERE"
+msgstr ""
+
+#. Default: "Folder for SQL items"
+#: ../interfaces.py:59
+msgid "label_sql_folder_id"
+msgstr ""
+
+#. Default: "SQL Item ID"
+#: ../behavior/behaviors.py:20
+msgid "label_sql_id"
+msgstr ""
+
+#. Default: "Last modification date time"
+#: ../interfaces.py:53
+msgid "label_sql_modification_last_timestamp"
+msgstr ""
+
+#. Default: "Modification date time column"
+#: ../interfaces.py:46
+msgid "label_sql_modification_timestamp_column"
+msgstr ""
+
+#. Default: "SQL Virtual"
+#: ../behavior/behaviors.py:28
+msgid "label_sql_virtual"
+msgstr ""
+
+#. Default: "Table"
+#: ../interfaces.py:27
+msgid "label_table"
+msgstr ""
