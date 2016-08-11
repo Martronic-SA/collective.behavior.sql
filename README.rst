@@ -40,5 +40,5 @@ For the sql dexterity objects that are not added in the site (called virtual ite
 Funding
 -------
 
-Idiap Research Institute, Martigny, Switzerland
-Martronic SA, Monthey, Switzerland
+- `Idiap Research Institute <http://www.idiap.ch>`_, Martigny, Switzerland
+- `Martronic SA <http://www.martronic.ch>`_, Monthey, Switzerland
