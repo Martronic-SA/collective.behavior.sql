@@ -21,15 +21,6 @@ class SQLTraverserOrdering(DefaultOrdering):
             catalog = getToolByName(getSite(), "portal_catalog")
         except:
             return super(SQLTraverserOrdering, self).idsInOrder()
-#        self.connection = getUtility(ISQLConnectionsUtility, name=sql_type)
-#            res = self.connection.conn.execute(s).fetchall()
-#            for a in res:
-#                sql_id = a[0]
-#                results = self.catalog.searchResults(portal_type=sql_type, sql_id=sql_id, sql_virtual=True)
-#                if results:
-#                    item = results[0].getObject()
-#                else:
-#                    item = self.factory_utility(portal_type=self.fti_id, sql_id=sql_id, sql_virtual=True).__of__(site)
         results = catalog.searchResults(portal_type=sql_type, sql_virtual=True)
         
         res = list(self._order())+[a.getId for a in results if a and a.getId]

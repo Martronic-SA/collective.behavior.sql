@@ -32,7 +32,7 @@ class SQLAlchemyConnectionStringsVocabulary(object):
 
     def __call__(self, context):
         saconnect = ISQLAlchemyConnectionStrings(component.getUtility(ISiteRoot))
-        items = [SimpleTerm(url, url, name) for name, url in saconnect.items()]
+        items = [SimpleTerm(name, name, name) for name in saconnect.keys()]
         return SimpleVocabulary(items)
 
 SQLAlchemyConnectionStringsVocabularyFactory = SQLAlchemyConnectionStringsVocabulary()
@@ -47,8 +47,12 @@ class SQLAlchemyTablesStringsVocabulary(object):
         if not urls:
             return SimpleVocabulary([])
         tables = []
-        sql_connection = getattr(context, 'sql_connection', None) and context.sql_connection or urls[0]
-        engine = create_engine(sql_connection)
+        if ISQLTypeSchemaContext.providedBy(context):
+            context = ISQLTypeSettings(context.fti)
+        if not ISQLTypeSettings.providedBy(context):
+            context = ISQLTypeSettings(context)
+        sql_url = context.sql_url and context.sql_url or urls[0]
+        engine = create_engine(sql_url)
 #            Base = declarative_base(bind=engine)
         insp = reflection.Inspector.from_engine(engine)
         tables = insp.get_table_names()
@@ -108,13 +112,15 @@ class SQLAlchemyColumnsUniqueStringsVocabulary(object):
             context = ISQLTypeSettings(context.fti)
         elif IField.providedBy(context):
             context = ISQLTypeSettings(aq_parent(context.context).fti)
+        if not ISQLTypeSettings.providedBy(context):
+            context = ISQLTypeSettings(context)
         urls = ISQLAlchemyConnectionStrings(component.getUtility(ISiteRoot)).values()
         if not getattr(context, 'sql_table', None):
             return SimpleVocabulary([])
         columns = []
-        sql_connection = context.sql_connection
+        sql_url = context.sql_url
         sql_table = context.sql_table
-        engine = create_engine(sql_connection)
+        engine = create_engine(sql_url)
         insp = reflection.Inspector.from_engine(engine)
         base_columns = insp.get_columns(sql_table)
         columns = set()
@@ -148,9 +154,11 @@ class SQLAlchemyColumnsTimestampVocabulary(object):
         if not getattr(context, 'sql_connection', None) or not getattr(context, 'sql_table', None):
             return SimpleVocabulary([])
         columns = []
-        sql_connection = context.sql_connection
+        if not ISQLTypeSettings.providedBy(context):
+            context = ISQLTypeSettings(context)
+        sql_url = context.sql_url
         sql_table = context.sql_table
-        engine = create_engine(sql_connection)
+        engine = create_engine(sql_url)
         insp = reflection.Inspector.from_engine(engine)
         columns = insp.get_columns(sql_table)
         columns.sort( lambda x, y: cmp(x.get('name'), y.get('name') ) )

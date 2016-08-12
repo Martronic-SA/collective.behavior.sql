@@ -12,6 +12,7 @@ from plone.dexterity.interfaces import IDexterityFTI
 from ZPublisher.BaseRequest import DefaultPublishTraverse
 from Products.CMFCore.utils import getToolByName
 from zope.component.interfaces import IFactory
+from collective.saconnect.interfaces import ISQLAlchemyConnectionStrings
 from zope.interface import implementer, implements
 from plone.app.dexterity.browser.types import TypeSettingsAdapter, TypesContext, TypeSchemaContext
 from plone.app.dexterity.interfaces import ITypesContext, ITypesContext, ITypeStats
@@ -203,6 +204,15 @@ class SQLTypeSettingsAdapter(TypeSettingsAdapter):
     sql_connection = property(
         _get_sql_connection, _set_sql_connection)
 
+    @property
+    def sql_url(self):
+        saStorage = ISQLAlchemyConnectionStrings(
+            getUtility(ISiteRoot)
+        )
+        if '://' in self.sql_connection:
+            return self.sql_connection
+        return saStorage.get(self.sql_connection)
+    
     def _get_sql_table(self):
         return getattr(self.context, 'sql_table', '')
 

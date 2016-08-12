@@ -7,7 +7,6 @@ from plone.supermodel import model
 from plone.autoform import directives as form
 from zope.component import adapter
 from zope.component import provideAdapter
-from zope.i18nmessageid import MessageFactory
 from zope.interface import Interface
 from zope.interface import alsoProvides
 from zope.interface import implementer

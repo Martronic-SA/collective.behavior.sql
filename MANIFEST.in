@@ -5,3 +5,4 @@ global-exclude *pyc
 global-exclude *pyo
 global-exclude *py~
 global-exclude *zcml~
+global-exclude *~

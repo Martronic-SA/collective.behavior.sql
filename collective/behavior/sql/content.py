@@ -696,16 +696,16 @@ class SQLBaseConnectionUtility(object):
         return self._insp
 
     def setupConnection(self):
-        LOG.info('setupConnection:'+self.sql_connection)
+        LOG.info('setupConnection:'+self.sql_url)
         if self._scoped_session:
             self._scoped_session.remove()
-        engine = create_engine(self.sql_connection, encoding='utf8', echo=False, pool_recycle=1)
+        engine = create_engine(self.sql_url, encoding='utf8', echo=False, pool_recycle=1)
         self._insp = reflection.Inspector.from_engine(engine)
         self.d_base = declarative_base(bind=engine)
         a_base = automap_base(bind=engine)
         try:
             a_base.metadata.reflect(views=True)
-            self.name = unicode(self.sql_connection)
+            self.name = unicode(self.sql_url)
         except:
             LOG.info('Unable to reflect the whole DB!')
             exc_type, exc_value, exc_traceback = sys.exc_info()
@@ -714,7 +714,7 @@ class SQLBaseConnectionUtility(object):
                 LOG.info(line)
             a_base.metadata.reflect(views=True, only=[self.sql_table])
             self.restricted = True
-            self.name = unicode(self.sql_connection+'+'+self.sql_table)
+            self.name = unicode(self.sql_url+'+'+self.sql_table)
         a_base.prepare(a_base.metadata.bind)
         self.a_base = a_base
         self._scoped_session = scoped_session(sessionmaker(bind=self.a_base.metadata.bind, extension=ZopeTransactionExtension(keep_session=True), autocommit=True))
@@ -723,6 +723,7 @@ class SQLBaseConnectionUtility(object):
         if not fti or not fti.sql_connection:
             return
         self.sql_connection = fti.sql_connection
+        self.sql_url = fti.sql_url
         self.sql_table = fti.sql_table
         self.engine = None
         self.d_base = None # declarative base
@@ -748,7 +749,7 @@ class SQLConnectionsUtility(object):
     def __init__(self, fti=None):
         if not fti:
             return
-        sql_connection = queryUtility(ISQLBaseConnectionUtility, name=fti.sql_connection, default=None)
+        sql_connection = queryUtility(ISQLBaseConnectionUtility, name=fti.sql_url, default=None)
         if sql_connection:
             self.connection_name = sql_connection.name
         else:
@@ -763,10 +764,10 @@ class SQLConnectionsUtility(object):
             gsm.registerUtility(processor, ISQLBaseConnectionUtility, name=connection_name)
             self.connection_name = connection_name
         self.sql_table = fti.sql_table
-        self.factory = fti.factory
+        self.factory = fti.context.factory
         self.sql_id_column = getattr(fti, 'sql_id_column', None) and getattr(fti, 'sql_id_column', None) or 'id'
         fieldnames = {}
-        for field_name, field in schema.getFieldsInOrder( fti.lookupSchema() ):
+        for field_name, field in schema.getFieldsInOrder( fti.context.lookupSchema() ):
             if getattr(field, 'sql_column', None):
                 sql_column = getattr(field, 'sql_column', None)
                 fieldnames[field_name] = sql_column
@@ -845,7 +846,7 @@ def registerPublisherForFTI(fti):
     # This registers a publisher that will allow to traverse to each sql item
     if not getattr(fti, 'sql_table', None):
         return
-    name = getattr(fti, 'sql_folder_id', fti.getId())
+    name = getattr(fti, 'sql_folder_id', fti.id)
     has_folder = False
     if name and IRelationValue.providedBy(name):
         obj = name.to_object
@@ -853,7 +854,7 @@ def registerPublisherForFTI(fti):
             has_folder = True
             name = obj.getId()
         else:
-            name = fti.getId()
+            name = fti.context.getId()
     elif name and name.startswith('/'):
         portal = getToolByName(getSite(), "portal_url").getPortalObject()
         try:
@@ -862,7 +863,7 @@ def registerPublisherForFTI(fti):
         except:
             pass
     elif not name:
-        name = fti.getId()
+        name = fti.context.getId()
     if not has_folder:
         view = queryMultiAdapter((None, ICollectiveBehaviorSQLLayer), IBrowserView, name='data-'+name, default=None)
         if view != None:
@@ -890,6 +891,8 @@ def registerConnectionUtilityForFTI(fti):
     return getUtility(ISQLConnectionsUtility, name=fti.id)
 
 def initConnectionForFTI(fti):
+    if not ISQLTypeSettings.providedBy(fti):
+        fti = ISQLTypeSettings(fti)
     registerPublisherForFTI(fti)
     registerConnectionUtilityForFTI(fti)
 
@@ -901,6 +904,8 @@ def initConnections(site, event):
             ftis = [a for a in getAllUtilitiesRegisteredFor(IDexterityFTI) if 'collective.behavior.sql.behavior.behaviors.ISQLContent' in a.behaviors and getattr(a, 'sql_table', None)]
             if ftis:
                 for fti in ftis:
+                    if not ISQLTypeSettings.providedBy(fti):
+                        fti = ISQLTypeSettings(fti)
                     initConnectionForFTI(fti)
             else:
                 gsm = getGlobalSiteManager()
@@ -909,22 +914,23 @@ def initConnections(site, event):
 
 def updateConnectionsForFti(fti):
     # find the FTI and model
+    if not ISQLTypeSettings.providedBy(fti):
+        fti = ISQLTypeSettings(fti)
     connection = queryUtility(ISQLConnectionsUtility, name=fti.id, default=None)
     if not connection:
         connection = registerConnectionUtilityForFTI(fti)
     registerPublisherForFTI(fti)
-    adapted = ISQLTypeSettings(fti)
-    sql_id_column = getattr(adapted, 'sql_id_column', 'id')
+    sql_id_column = getattr(fti, 'sql_id_column', 'id')
 #    fieldnames = {'id':sql_id_column}
     fieldnames = {}
-    for field_name, field in schema.getFieldsInOrder( fti.lookupSchema() ):
+    for field_name, field in schema.getFieldsInOrder( fti.context.lookupSchema() ):
         if getattr(field, 'sql_column', None):
             sql_column = getattr(field, 'sql_column', None)
             fieldnames[field_name] = sql_column
-    for line in getattr(adapted, 'sql_fields_columns', []):
+    for line in getattr(fti, 'sql_fields_columns', []):
         fieldnames[line.split(':')[0]] = line.split(':')[1]
     connection.fieldnames = fieldnames
-    sqlfti = adapted.updateCatalogItems()
+    sqlfti = fti.updateCatalogItems()
 
 
 def updateConnections(schema_context, event=None):

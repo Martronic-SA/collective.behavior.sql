@@ -9,7 +9,6 @@ from plone.app.dexterity.browser.layout import TypeFormLayout
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.interfaces import IFolderish
 from zope.component import adapter, queryUtility
-from zope.component.interfaces import IFactory
 from zope.interface import implementer, Interface
 from z3c.form import form, field, button
 from z3c.form.interfaces import IButtonForm, IEditForm, DISPLAY_MODE
@@ -68,7 +67,7 @@ class SQLTypeOverviewForm(TypeOverviewForm):
             to_omit = ['sql_id_column', 'sql_WHERE', 'sql_modification_timestamp_column', 'sql_modification_last_timestamp', 'sql_folder_id']
             fields = fields.omit('sql_id_column', 'sql_WHERE', 'sql_modification_timestamp_column', 'sql_modification_last_timestamp', 'sql_folder_id')
         else:
-            engine = create_engine(fti_adapted.sql_connection)
+            engine = create_engine(fti_adapted.sql_url)
             insp = reflection.Inspector.from_engine(engine)
             tables = insp.get_table_names()
             views = insp.get_view_names()
@@ -82,9 +81,9 @@ class SQLTypeOverviewForm(TypeOverviewForm):
                                  *names)
         if not IFolderish.implementedBy(klass):
             del filtered['filter_content_types']
-        urls = ISQLAlchemyConnectionStrings(component.getUtility(ISiteRoot)).values()
-        if len(urls) == 1:
-            filtered['sql_connection'].field.default = urls[0]
+        keys = ISQLAlchemyConnectionStrings(component.getUtility(ISiteRoot)).keys()
+        if len(keys) == 1:
+            filtered['sql_connection'].field.default = keys[0]
         return filtered
 
     def updateWidgets(self):
