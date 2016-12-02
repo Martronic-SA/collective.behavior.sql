@@ -404,6 +404,8 @@ class SQLDexterityItem(Item):
                     if name in iface.names():
                         field = iface[name]
                         if IRichText.providedBy(field):
+                               if not value:
+                                   return ''
                             if not '<p' in value or not '<br' in value:
                                 value = '<p>'+'</p><p>'.join([a for a in value.split('\n') if a.strip()])+'</p>'
 #                            try:
@@ -623,13 +625,14 @@ class SQLDexterityPublishTraverse(DexterityPublishTraverse):
         self.fti_id = annotations.get('collective.behavior.sql.sql_type')
         if self.fti_id:
             self.fti = getUtility(IDexterityFTI, name=self.fti_id)
-            name = getattr(self.fti, 'sql_folder_id', self.fti_id)
+            name = getattr(ISQLTypeSettings(self.fti), 'sql_folder_id', self.fti_id)
             if name and IRelationValue.providedBy(name):
                 obj = name.to_object
                 if obj:
                     name = obj.getId()
                 else:
                     name = self.fti_id
+                
             elif name and name.startswith('/'):
                 portal = getToolByName(getSite(), 'portal_url').getPortalObject()
                 obj = portal.restrictedTraverse(name)

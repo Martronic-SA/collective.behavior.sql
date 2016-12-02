@@ -1,3 +1,6 @@
+- v 0.9.1 Fixed The SQLContent publisher to get Folder container from RelationValue. Get it from
+        standard path might throw security issues.
+
 - v 0.9 Use name instead of url to store sql_connection, so it's possible to change the url
         in saconnect without losing its reference in type definition.
 

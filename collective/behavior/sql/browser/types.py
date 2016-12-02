@@ -60,7 +60,10 @@ class RelationValue(object):
     @property
     def to_object(self):
         portal = getToolByName(getSite(), 'portal_url').getPortalObject()
-        return portal.restrictedTraverse(self.to_id)
+        try:
+            return portal.restrictedTraverse(self.to_id)
+        except:
+            return None
 
     @property
     def to_path(self):
