@@ -261,7 +261,12 @@ class SQLDexterityItem(Item):
         if connection and name in connection.fieldnames.keys():
             sql_column = connection.fieldnames[name]
             sql_item = self.getSQLItem()
-            sql_id = getattr(sql_item, connection.sql_id_column, None)
+            try:
+                sql_id = getattr(sql_item, connection.sql_id_column, None)
+            except orm_exc.DetachedInstanceError:
+                self._v_sql_item = None
+                sql_item = self.getSQLItem()
+                sql_id = getattr(sql_item, connection.sql_id_column, None)
             fieldname = 'name'
             if sql_item and sql_column:
                 while '.' in sql_column:

@@ -1,6 +1,6 @@
 Metadata-Version: 1.1
 Name: collective.behavior.sql
-Version: 0.9
+Version: 0.9.1
 Summary: collective.behavior.sql
 Home-page: http://www.martronic.ch
 Author: Martronic SA
@@ -50,6 +50,9 @@ Description: collective.behavior.sql
         
         - `Idiap Research Institute <http://www.idiap.ch>`_, Martigny, Switzerland
         - `Martronic SA <http://www.martronic.ch>`_, Monthey, Switzerland
+        
+        - v 0.9.1 Fixed The SQLContent publisher to get Folder container from RelationValue. Get it from
+                standard path might throw security issues.
         
         - v 0.9 Use name instead of url to store sql_connection, so it's possible to change the url
                 in saconnect without losing its reference in type definition.
