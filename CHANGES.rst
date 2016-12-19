@@ -1,3 +1,5 @@
+- v 0.9.3 Fix 
+
 - v 0.9.2 Use an unique name for relations as there can be multiple foreign keys linking the same two tables.
         Fix to be sure all sql_id are strings and not integers
 

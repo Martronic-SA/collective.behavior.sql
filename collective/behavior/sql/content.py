@@ -687,7 +687,7 @@ class SQLDexterityPublishTraverse(DexterityPublishTraverse):
 
 def unique_collection(base, local_cls, referred_cls, constraint):
     #there can be more that one relation between local_cls and referred_cls
-    return referred_cls.__name__.lower()+'_'+constraint.table.lower() + "_collection"
+    return referred_cls.__name__.lower()+'_'+constraint.table.name.lower() + "_collection"
     
 @implementer(ISQLBaseConnectionUtility)
 class SQLBaseConnectionUtility(object):
