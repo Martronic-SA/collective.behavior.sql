@@ -1,6 +1,7 @@
 import logging
 from Acquisition import aq_inner
 from datetime import datetime
+from unidecode import unidecode
 from zope.component import adapter, getGlobalSiteManager
 from zope import component, interface, schema
 from Products.CMFCore.interfaces import ISiteRoot
@@ -331,7 +332,7 @@ class SQLTypeSettingsAdapter(TypeSettingsAdapter):
             catalog = getToolByName(site, "portal_catalog")
             realbrains = catalog.searchResults(portal_type=self.context.id, sql_virtual=False)
             for brain in realbrains:
-                realids.append(brain.sql_id)
+                realids.append(str(brain.sql_id))
         if 'id' in index:
             sql_column = self.connection.fieldnames.get('id', getattr(self.context, 'sql_id_column', 'id'))
             instruction = 'SELECT '+self.sql_id_column+','+sql_column+' FROM '+self.context.sql_table
@@ -347,6 +348,10 @@ class SQLTypeSettingsAdapter(TypeSettingsAdapter):
             s = text(instruction)
             res = self.connection.conn.execute(s).fetchall()
             for sql_id, item_id in res:
+                try:
+                    sql_id = str(unidecode(str(sql_id)))
+                except:
+                    sql_id = str(unidecode(sql_id))
                 if not item_id:
                     item_id = sql_id
                 if sql_id in realids:
@@ -368,6 +373,10 @@ class SQLTypeSettingsAdapter(TypeSettingsAdapter):
             res = self.connection.conn.execute(s).fetchall()
             for a in res:
                 sql_id = a[0]
+                try:
+                    sql_id = str(unidecode(str(sql_id)))
+                except:
+                    sql_id = str(unidecode(sql_id))
                 if sql_id in realids:
                     continue
                 if not sqlidOnly:
@@ -413,7 +422,7 @@ class SQLTypeSettingsAdapter(TypeSettingsAdapter):
         index = self.connection and self.connection.fieldnames.keys() or []
         realids = []
         for brain in realbrains:
-            realids.append(brain.sql_id)
+            realids.append(str(brain.sql_id))
             if index:
                 catalog.reindexObject(brain.getObject(), index)
             else:

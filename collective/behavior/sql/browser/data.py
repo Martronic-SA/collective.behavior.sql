@@ -142,12 +142,12 @@ class SQLItemListingForm(crud.CrudForm):
             res = self.connection.conn.execute(s).fetchall()
             LOG.info(res)
             for sql_id, item_id in res:
-                if not item_id:
-                    item_id = sql_id
                 try:
                     sql_id = str(unidecode(str(sql_id)))
                 except:
                     sql_id = str(unidecode(sql_id))
+                if not item_id:
+                    item_id = sql_id
                 items.append((sql_id, self.factory_utility(sql_id=sql_id, id=item_id).__of__(site)))
         else:
             req = 'SELECT '+self.sql_id_column+' FROM '+self.sqlfti.sql_table
