@@ -145,10 +145,9 @@ class SQLItemListingForm(crud.CrudForm):
                 if not item_id:
                     item_id = sql_id
                 try:
-                    item_id = str(item_id)
+                    sql_id = str(unidecode(str(sql_id)))
                 except:
-                    pass
-                sql_id = str(unidecode(item_id))
+                    sql_id = str(unidecode(sql_id))
                 items.append((sql_id, self.factory_utility(sql_id=sql_id, id=item_id).__of__(site)))
         else:
             req = 'SELECT '+self.sql_id_column+' FROM '+self.sqlfti.sql_table
@@ -158,15 +157,15 @@ class SQLItemListingForm(crud.CrudForm):
             res = self.connection.conn.execute(s).fetchall()
             for a in res:
                 sql_id = a[0]
+                try:
+                    sql_id = str(unidecode(str(sql_id)))
+                except:
+                    sql_id = str(unidecode(sql_id))
                 results = self.catalog.searchResults(portal_type=self.fti_id, sql_id=sql_id, sql_virtual=False)
                 if results:
                     item = results[0].getObject()
                 else:
                     item = self.factory_utility(portal_type=self.fti_id, sql_id=sql_id, sql_virtual=True).__of__(site)
-                try:
-                    sql_id = str(unidecode(str(sql_id)))
-                except:
-                    sql_id = str(unidecode(sql_id))
                 items.append((sql_id, item))
         return items
 
