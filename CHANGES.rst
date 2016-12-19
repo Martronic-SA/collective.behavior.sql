@@ -1,3 +1,5 @@
+- v 0.9.2 Use an unique name for relations as there can be multiple foreign keys linking the same two tables.
+
 - v 0.9.1 Fixed The SQLContent publisher to get Folder container from RelationValue. Get it from
         standard path might throw security issues.
 

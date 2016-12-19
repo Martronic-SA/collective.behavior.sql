@@ -685,6 +685,10 @@ class SQLDexterityPublishTraverse(DexterityPublishTraverse):
         return super(SQLDexterityPublishTraverse, self).publishTraverse(request, name)
 
 
+def unique_collection(base, local_cls, referred_cls, constraint):
+    #there can be more that one relation between local_cls and referred_cls
+    return referred_cls.__name__.lower()+'_'+constraint.table.lower() + "_collection"
+    
 @implementer(ISQLBaseConnectionUtility)
 class SQLBaseConnectionUtility(object):
     
@@ -723,7 +727,7 @@ class SQLBaseConnectionUtility(object):
             a_base.metadata.reflect(views=True, only=[self.sql_table])
             self.restricted = True
             self.name = unicode(self.sql_url+'+'+self.sql_table)
-        a_base.prepare(a_base.metadata.bind)
+        a_base.prepare(a_base.metadata.bind, name_for_collection_relationship=unique_collection)
         self.a_base = a_base
         self._scoped_session = scoped_session(sessionmaker(bind=self.a_base.metadata.bind, extension=ZopeTransactionExtension(keep_session=True), autocommit=True))
 
