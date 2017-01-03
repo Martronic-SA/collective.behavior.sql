@@ -301,8 +301,18 @@ class SQLTypeSettingsAdapter(TypeSettingsAdapter):
             self.context.sql_folder_id = None
         if value != old_value:
             site = getSite()
-            old_object = old_value and site.restrictedTraverse(old_value) or None
-            new_object = value and value.to_object or None
+            old_object = None
+            if old_value:
+                try:
+                    old_object = site.restrictedTraverse(old_value)
+                except:
+                    pass
+            new_object = None
+            if value:
+                try:
+                    value = value.to_object
+                except:
+                    pass
             if old_object:
                 marker.erase(old_object, ISQLTraverser)
                 if IAnnotations(old_object).get('collective.behavior.sql.sql_type'):

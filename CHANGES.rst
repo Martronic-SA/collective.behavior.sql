@@ -1,3 +1,5 @@
+- v 0.9.4 Use custom sqlachemy table naming to be able to get more than one foreign key table between two same tables
+
 - v 0.9.3 Fix 
 
 - v 0.9.2 Use an unique name for relations as there can be multiple foreign keys linking the same two tables.

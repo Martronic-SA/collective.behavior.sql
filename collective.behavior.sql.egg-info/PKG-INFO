@@ -1,6 +1,6 @@
 Metadata-Version: 1.1
 Name: collective.behavior.sql
-Version: 0.9.2
+Version: 0.9.3
 Summary: collective.behavior.sql
 Home-page: http://www.martronic.ch
 Author: Martronic SA
@@ -50,6 +50,8 @@ Description: collective.behavior.sql
         
         - `Idiap Research Institute <http://www.idiap.ch>`_, Martigny, Switzerland
         - `Martronic SA <http://www.martronic.ch>`_, Monthey, Switzerland
+        
+        - v 0.9.3 Fix 
         
         - v 0.9.2 Use an unique name for relations as there can be multiple foreign keys linking the same two tables.
                 Fix to be sure all sql_id are strings and not integers
