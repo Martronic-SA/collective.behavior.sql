@@ -891,6 +891,8 @@ def registerPublisherForFTI(fti):
 
 def registerConnectionUtilityForFTI(fti):
     # This registers an utility that will handle connections and sessions for each defined SQL DX types.
+    if not ISQLTypeSettings.providedBy(fti):
+        fti = ISQLTypeSettings(fti)
     utility = queryUtility(ISQLConnectionsUtility, name=fti.id, default=None)
     if utility != None:
         return utility

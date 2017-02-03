@@ -310,7 +310,7 @@ class SQLTypeSettingsAdapter(TypeSettingsAdapter):
             new_object = None
             if value:
                 try:
-                    value = value.to_object
+                    new_object = value.to_object
                 except:
                     pass
             if old_object:
