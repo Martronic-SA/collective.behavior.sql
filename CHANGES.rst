@@ -1,3 +1,6 @@
+- v 0.9.5 Register traverser with wrapped fti
+    Fix wrong variable when saving sql folder attribute of dx type.
+
 - v 0.9.4 Use custom sqlachemy table naming to be able to get more than one foreign key table between two same tables
 
 - v 0.9.3 Fix 
