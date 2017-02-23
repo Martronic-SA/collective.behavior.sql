@@ -1,3 +1,5 @@
+- v 0.9.6 Catch sql connection errors on init so that the site doesn't break
+
 - v 0.9.5 Register traverser with wrapped fti
     Fix wrong variable when saving sql folder attribute of dx type.
 

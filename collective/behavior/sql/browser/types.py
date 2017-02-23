@@ -187,12 +187,15 @@ class SQLTypeSettingsAdapter(TypeSettingsAdapter):
 
     @property
     def connection(self):
+        connection = None
         if self.sql_connection and self.sql_table:
             try:
-                return getUtility(ISQLConnectionsUtility, name=self.context.id)
+                connection = getUtility(ISQLConnectionsUtility, name=self.context.id)
             except:
-                return updateConnectionsForFti(self.context)
-        return None
+                connection = updateConnectionsForFti(self.context)
+        if not getattr(connection, 'name', None):
+            return None
+        return connection
 
     def _get_sql_connection(self):
         return getattr(self.context, 'sql_connection', '')

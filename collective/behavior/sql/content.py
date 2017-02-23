@@ -711,7 +711,13 @@ class SQLBaseConnectionUtility(object):
         LOG.info('setupConnection:'+self.sql_url)
         if self._scoped_session:
             self._scoped_session.remove()
-        engine = create_engine(self.sql_url, encoding='utf8', echo=False, pool_recycle=1)
+        try:
+            engine = create_engine(self.sql_url, encoding='utf8', echo=False, pool_recycle=1)
+        except:
+            exc_type, exc_value, exc_traceback = sys.exc_info()
+            lines = traceback.format_exception(exc_type, exc_value, exc_traceback)
+            LOG.error(''.join('!! ' + line for line in lines))
+            return
         self._insp = reflection.Inspector.from_engine(engine)
         self.d_base = declarative_base(bind=engine)
         a_base = automap_base(bind=engine)
@@ -920,7 +926,12 @@ def initConnections(site, event):
                 for fti in ftis:
                     if not ISQLTypeSettings.providedBy(fti):
                         fti = ISQLTypeSettings(fti)
-                    initConnectionForFTI(fti)
+                    try:
+                        initConnectionForFTI(fti)
+                    except:
+                        LOG.error('Unable to init connection for %s' % (fti.id))
+                        gsm = getGlobalSiteManager()
+                        gsm.registerUtility(SQLConnectionsUtility(), ISQLConnectionsUtility)
             else:
                 gsm = getGlobalSiteManager()
                 gsm.registerUtility(SQLConnectionsUtility(), ISQLConnectionsUtility)
@@ -933,6 +944,8 @@ def updateConnectionsForFti(fti):
     connection = queryUtility(ISQLConnectionsUtility, name=fti.id, default=None)
     if not connection:
         connection = registerConnectionUtilityForFTI(fti)
+    if not getattr(connection, 'name', None):
+        return
     registerPublisherForFTI(fti)
     sql_id_column = getattr(fti, 'sql_id_column', 'id')
 #    fieldnames = {'id':sql_id_column}
